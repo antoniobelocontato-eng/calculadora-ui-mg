@@ -2,150 +2,160 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Anti-Fraude: Dose Real</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculadora de Precisão: Dose Real</title>
     <style>
         :root { 
             --cor-caneta: #2c3e50; 
-            --cor-seringa: #3498db; 
-            /* Novos tons para o degradê */
+            --cor-primaria: #00cec9;
             --bg-gradiente: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #81ecec 100%);
         }
 
         body { 
             font-family: 'Segoe UI', sans-serif; 
-            /* Aplicando o degradê azul e verde claro */
-            background: #81ecec;
             background: var(--bg-gradiente);
             background-attachment: fixed;
             display: flex; 
             justify-content: center; 
-            align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px; 
+            padding: 15px; 
+            box-sizing: border-box;
         }
 
         .container { 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 30px; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 20px; 
             border-radius: 20px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
-            max-width: 900px; 
+            max-width: 800px; 
             width: 100%; 
+            height: fit-content;
         }
 
-        h1 { color: var(--cor-caneta); text-align: center; margin-bottom: 30px; font-weight: 800; }
+        h1 { color: var(--cor-caneta); text-align: center; font-size: 1.5rem; margin-bottom: 20px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         
-        /* Ajuste nos cards para ficarem mais limpos */
         .card { 
-            border: none; 
-            padding: 20px; 
+            border: 1px solid #f1f1f1; 
+            padding: 15px; 
             border-radius: 15px; 
-            background: #ffffff; 
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: #fff; 
         }
-        
-        /* Ilustração da Caneta */
-        .pen-container { height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        .pen-body { width: 180px; height: 30px; background: var(--cor-caneta); border-radius: 5px 20px 20px 5px; position: relative; }
-        .pen-cap { width: 50px; height: 32px; background: #34495e; position: absolute; left: -5px; top: -1px; border-radius: 5px; }
-        .pen-window { width: 40px; height: 12px; background: #e0f7fa; position: absolute; right: 35px; top: 9px; border-radius: 2px; border: 1px solid #fff; }
-        .pen-button { width: 12px; height: 20px; background: #95a5a6; position: absolute; right: -8px; top: 5px; border-radius: 0 5px 5px 0; }
 
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; color: #555; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #dfe6e9; border-radius: 10px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #81ecec; box-shadow: 0 0 8px rgba(129, 236, 236, 0.5); }
-        
-        .syringe-area { text-align: center; }
-        canvas { background: #fff; border-radius: 8px; margin-top: 10px; border: 1px solid #f1f1f1; }
+        /* Desenho da Caneta */
+        .pen-container { height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .pen-body { width: 140px; height: 25px; background: var(--cor-caneta); border-radius: 5px 15px 15px 5px; position: relative; }
+        .pen-window { width: 30px; height: 10px; background: #e0f7fa; position: absolute; right: 30px; top: 7px; border: 1px solid #fff; }
 
-        /* Estilo do Box de Resultado */
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #555; }
+        input, select { 
+            width: 100%; padding: 10px; margin-bottom: 12px; 
+            border: 2px solid #eee; border-radius: 8px; 
+            font-size: 16px; /* Tamanho 16px evita zoom no iOS */
+            box-sizing: border-box;
+        }
+
+        canvas { background: #fff; display: block; margin: 0 auto; max-width: 100%; }
+
         .result-box { 
-            margin-top: 30px; 
-            padding: 25px; 
+            margin-top: 20px; padding: 15px; 
             background: linear-gradient(135deg, #2ecc71, #27ae60); 
-            color: white; 
-            border-radius: 12px; 
-            text-align: center; 
-            font-size: 1.1em; 
-            line-height: 1.6;
-            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            color: white; border-radius: 12px; text-align: center; 
+            font-weight: 500; font-size: 1rem;
         }
-        
-        .alert { color: #e74c3c; font-size: 0.85em; margin-top: 10px; font-weight: 600; }
 
-        /* Responsividade para celulares */
-        @media (max-width: 600px) {
+        .btn-limpar {
+            width: 100%; padding: 12px; margin-top: 15px;
+            background: #e74c3c; color: white; border: none;
+            border-radius: 8px; font-weight: bold; cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-limpar:hover { background: #c0392b; }
+
+        @media (max-width: 650px) {
             .grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Calculadora de Dosagem Real</h1>
+    <h1>Calculadora de Equivalência</h1>
     
     <div class="grid">
         <div class="card">
             <div class="pen-container">
-                <div class="pen-body">
-                    <div class="pen-cap"></div>
-                    <div class="pen-window"></div>
-                    <div class="pen-button"></div>
-                </div>
+                <div class="pen-body"><div class="pen-window"></div></div>
             </div>
-            <h3>Dados da Caneta</h3>
-            <label>Volume total (ml):</label>
-            <input type="number" id="pen_ml" placeholder="Ex: 3" step="0.1" oninput="calculate()">
+            <label>Volume da Caneta (ml):</label>
+            <input type="number" id="pen_ml" placeholder="Ex: 3" step="any" oninput="calculate('ui')">
             
             <label>Concentração total (mg):</label>
-            <input type="number" id="pen_mg" placeholder="Ex: 18" step="0.1" oninput="calculate()">
-            <p class="alert">Confirme os mg/ml no rótulo.</p>
+            <input type="number" id="pen_mg" placeholder="Ex: 18" step="any" oninput="calculate('ui')">
+            
+            <hr>
+            <label style="color: #2980b9;">Para ter X mg (Dose Alvo):</label>
+            <input type="number" id="target_mg" placeholder="Digite quantos mg deseja" step="any" oninput="calculate('mg')">
         </div>
 
-        <div class="card syringe-area">
-            <h3>Seringa de Insulina</h3>
-            <label>Capacidade da Seringa:</label>
-            <select id="syringe_type" onchange="calculate()">
+        <div class="card" style="text-align:center;">
+            <label>Seringa:</label>
+            <select id="syringe_type" onchange="calculate('ui')">
                 <option value="100">100 UI (1.0 ml)</option>
                 <option value="50">50 UI (0.5 ml)</option>
             </select>
 
-            <label>Marcação desejada (UI):</label>
-            <input type="number" id="dosage_ui" placeholder="Digite as Unidades" oninput="calculate()">
+            <label>Marcação na Seringa (UI):</label>
+            <input type="number" id="dosage_ui" placeholder="Ex: 10" step="any" oninput="calculate('ui')">
             
-            <canvas id="syringeCanvas" width="160" height="280"></canvas>
+            <canvas id="syringeCanvas" width="140" height="250"></canvas>
         </div>
     </div>
 
-    <div class="result-box" id="result">
-        Aguardando preenchimento para calcular...
-    </div>
+    <div class="result-box" id="result">Preencha os dados da caneta.</div>
+    
+    <button class="btn-limpar" onclick="limpar()">Limpar Dados</button>
 </div>
 
 <script>
-    function calculate() {
+    function calculate(mode) {
         const mlTotal = parseFloat(document.getElementById('pen_ml').value) || 0;
         const mgTotal = parseFloat(document.getElementById('pen_mg').value) || 0;
-        const uiSelected = parseFloat(document.getElementById('dosage_ui').value) || 0;
+        let uiInput = document.getElementById('dosage_ui');
+        let mgInput = document.getElementById('target_mg');
         const syringeType = parseFloat(document.getElementById('syringe_type').value);
 
-        const mgPerMl = mlTotal > 0 ? (mgTotal / mlTotal) : 0;
-        const mlPuxado = uiSelected / 100; // Padrão seringa U-100
-        const mgPuxado = mlPuxado * mgPerMl;
-
-        const resultDiv = document.getElementById('result');
-        if (mlTotal > 0 && mgTotal > 0 && uiSelected > 0) {
-            resultDiv.innerHTML = `Ao aspirar <strong>${uiSelected} UI</strong> nesta seringa, você terá <strong>${mgPuxado.toFixed(2)} mg</strong> da substância.<br><small>(Baseado na caneta de ${mgTotal}mg/${mlTotal}ml)</small>`;
-        } else {
-            resultDiv.innerHTML = "Insira os dados acima para validar a dose real.";
+        if (mlTotal <= 0 || mgTotal <= 0) {
+            document.getElementById('result').innerText = "Informe Volume e Concentração da caneta.";
+            return;
         }
 
-        drawSyringe(uiSelected, syringeType);
+        const mgPerMl = mgTotal / mlTotal;
+
+        if (mode === 'ui') {
+            // Calcula MG a partir da UI digitada
+            let uiValue = parseFloat(uiInput.value) || 0;
+            let mgCalculado = (uiValue / 100) * mgPerMl;
+            mgInput.value = uiValue > 0 ? mgCalculado.toFixed(2) : "";
+            updateUI(uiValue, mgCalculado, mgTotal, mlTotal, syringeType);
+        } else {
+            // Calcula UI a partir do MG digitado (Lógica Inversa)
+            let mgValue = parseFloat(mgInput.value) || 0;
+            let uiCalculado = (mgValue / mgPerMl) * 100;
+            uiInput.value = mgValue > 0 ? uiCalculado.toFixed(1) : "";
+            updateUI(uiCalculado, mgValue, mgTotal, mlTotal, syringeType);
+        }
+    }
+
+    function updateUI(ui, mg, mgTotal, mlTotal, maxUI) {
+        const resultDiv = document.getElementById('result');
+        if (ui > 0) {
+            resultDiv.innerHTML = `Na marcação de <strong>${ui.toFixed(1)} UI</strong>, você tem <strong>${mg.toFixed(2)} mg</strong>.<br><small>(Concentração: ${mgTotal}mg/${mlTotal}ml)</small>`;
+        }
+        drawSyringe(ui, maxUI);
     }
 
     function drawSyringe(ui, maxUI) {
@@ -153,43 +163,39 @@
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const startY = 20;
-        const height = 220;
-        const width = 40;
-        const centerX = canvas.width / 2 - width / 2;
+        const startY = 10, height = 200, width = 35, centerX = canvas.width / 2 - width / 2;
 
         // Corpo
-        ctx.strokeStyle = "#b2bec3";
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#ccc";
         ctx.strokeRect(centerX, startY, width, height);
 
-        // Líquido (Verde azulado para combinar com o tema)
+        // Líquido
         let fillLevel = (ui / maxUI) * height;
         if (fillLevel > height) fillLevel = height;
-        
         ctx.fillStyle = "#00cec9";
         ctx.fillRect(centerX + 2, (startY + height) - fillLevel, width - 4, fillLevel);
 
         // Escala
-        ctx.fillStyle = "#2d3436";
-        ctx.font = "bold 10px Arial";
-        ctx.textAlign = "right";
-        
+        ctx.fillStyle = "#000";
+        ctx.font = "10px Arial";
         for (let i = 0; i <= maxUI; i += (maxUI/10)) {
             let yPos = (startY + height) - (i / maxUI) * height;
-            ctx.beginPath();
-            ctx.moveTo(centerX, yPos);
-            ctx.lineTo(centerX + 8, yPos);
-            ctx.stroke();
-            ctx.fillText(i, centerX - 5, yPos + 4);
+            ctx.beginPath(); ctx.moveTo(centerX, yPos); ctx.lineTo(centerX + 8, yPos); ctx.stroke();
+            ctx.fillText(i, centerX - 18, yPos + 4);
         }
-        
+
         // Pistão
-        ctx.fillStyle = "#636e72";
-        ctx.fillRect(centerX + 2, (startY + height) - fillLevel - 6, width - 4, 10);
+        ctx.fillStyle = "#2d3436";
+        ctx.fillRect(centerX + 2, (startY + height) - fillLevel - 5, width - 4, 8);
     }
 
-    window.onload = () => calculate();
+    function limpar() {
+        document.querySelectorAll('input').forEach(i => i.value = "");
+        document.getElementById('result').innerText = "Preencha os dados da caneta.";
+        drawSyringe(0, 100);
+    }
+
+    window.onload = () => drawSyringe(0, 100);
 </script>
 
 </body>
