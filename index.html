@@ -9,230 +9,216 @@
             --cor-caneta: #2c3e50; 
             --cor-primaria: #00cec9;
             --cor-alerta: #e74c3c;
-            --bg-gradiente: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 50%, #81ecec 100%);
+            --cor-sucesso: #27ae60;
+            --bg-gradiente: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
 
         body { 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             background: var(--bg-gradiente);
-            background-attachment: fixed;
-            display: flex; 
-            justify-content: center; 
-            min-height: 100vh;
-            margin: 0;
-            padding: 15px; 
-            box-sizing: border-box;
+            display: flex; justify-content: center; min-height: 100vh; margin: 0; padding: 15px; box-sizing: border-box;
         }
 
         .container { 
-            background: rgba(255, 255, 255, 0.98); 
-            padding: 20px; 
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
-            max-width: 800px; 
-            width: 100%; 
+            background: white; padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 700px; width: 100%; 
         }
 
-        h1 { color: var(--cor-caneta); text-align: center; font-size: 1.5rem; margin-bottom: 20px; }
+        h1 { color: var(--cor-caneta); text-align: center; font-size: 1.4rem; margin-bottom: 20px; border-bottom: 2px solid var(--cor-primaria); padding-bottom: 10px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; }
         
-        .card { 
-            border: 1px solid #f1f1f1; 
-            padding: 15px; 
-            border-radius: 15px; 
-            background: #fff; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        .card { border: 1px solid #edf2f7; padding: 15px; border-radius: 12px; background: #f8fafc; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 12px; color: #4a5568; }
+        
+        .volume-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .vol-btn { 
+            flex: 1; padding: 10px; border: 2px solid #cbd5e0; border-radius: 8px; 
+            background: white; cursor: pointer; font-weight: bold; transition: all 0.2s;
         }
-
-        .pen-container { height: 50px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-        .pen-body { width: 140px; height: 25px; background: var(--cor-caneta); border-radius: 5px 15px 15px 5px; position: relative; }
-        .pen-window { width: 30px; height: 10px; background: #e0f7fa; position: absolute; right: 30px; top: 7px; border: 1px solid #fff; }
-
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #555; }
-        .label-azul { color: #2980b9; }
-        .label-alerta { color: var(--cor-alerta); }
+        .vol-btn.active { background: var(--cor-primaria); border-color: #00b5b1; color: white; }
 
         input, select { 
-            width: 100%; padding: 10px; margin-bottom: 12px; 
-            border: 2px solid #eee; border-radius: 8px; 
-            font-size: 16px; 
-            box-sizing: border-box;
-            transition: border-color 0.3s;
+            width: 100%; padding: 12px; margin-bottom: 15px; 
+            border: 2px solid #cbd5e0; border-radius: 8px; font-size: 16px; box-sizing: border-box;
         }
-        input:focus { border-color: var(--cor-primaria); outline: none; }
 
-        canvas { background: #fff; display: block; margin: 10px auto; max-width: 100%; border: 1px solid #f9f9f9; }
+        #custom_ml_container { display: none; }
 
         .result-box { 
-            margin-top: 20px; padding: 15px; 
-            background: #2d3436; 
-            color: white; border-radius: 12px; text-align: center; 
-            font-size: 0.95rem; line-height: 1.5;
+            margin-top: 20px; padding: 15px; background: #1a202c; 
+            color: white; border-radius: 12px; font-size: 0.9rem; line-height: 1.6;
         }
 
-        .comparativo { font-weight: bold; color: #55efc4; margin-top: 5px; display: block; }
-
-        .btn-limpar {
-            width: 100%; padding: 12px; margin-top: 15px;
-            background: var(--cor-alerta); color: white; border: none;
-            border-radius: 8px; font-weight: bold; cursor: pointer;
+        .info-mg-ui {
+            background: #e0f7fa; color: #006064; padding: 10px; border-radius: 8px;
+            font-size: 13px; margin-bottom: 15px; border-left: 5px solid #00cec9;
+            font-weight: 500;
         }
 
-        hr { border: 0; border-top: 1px solid #eee; margin: 15px 0; }
-
-        @media (max-width: 650px) {
-            .grid { grid-template-columns: 1fr; }
+        .aviso-seguranca {
+            background: #fff5f5; color: #c53030; padding: 10px; border-radius: 8px;
+            font-size: 11px; margin-top: 10px; border: 1px solid #feb2b2;
         }
+
+        .dose-perfeita { color: #4fd1c5; font-weight: bold; }
+        .dose-perigo { color: #fc8181; font-weight: bold; }
+
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Calculadora de Verificação</h1>
+    <h1>Verificador de Dosagem (UI)</h1>
     
+    <div id="mg_per_ui_info" class="info-mg-ui" style="display:none;"></div>
+
     <div class="grid">
         <div class="card">
-            <div class="pen-container">
-                <div class="pen-body"><div class="pen-window"></div></div>
+            <label>1. Volume da Caneta (ml):</label>
+            <div class="volume-selector">
+                <button class="vol-btn" onclick="setVolume(0.5, this)">0.5 ml</button>
+                <button class="vol-btn" onclick="setVolume(0.6, this)">0.6 ml</button>
+                <button class="vol-btn" onclick="setVolume('outro', this)">Outro</button>
             </div>
             
-            <label>Volume da Caneta (ml):</label>
-            <input type="number" id="pen_ml" placeholder="Ex: 3" oninput="calculate()">
+            <div id="custom_ml_container">
+                <input type="number" id="pen_ml" step="0.1" placeholder="Digite o volume em ml" oninput="calculate()">
+            </div>
             
-            <label>Concentração total (mg):</label>
-            <input type="number" id="pen_mg" placeholder="Ex: 18" oninput="calculate()">
+            <label>2. MG total escrito na Caneta:</label>
+            <input type="number" id="pen_mg" step="0.1" placeholder="Ex: 12.5" oninput="calculate()">
             
-            <hr>
+            <hr style="opacity: 0.2;">
             
-            <label class="label-azul">Para ter X mg (Dose Alvo):</label>
-            <input type="number" id="target_mg" placeholder="Quantos mg você deseja?" oninput="syncFromMg()">
+            <label style="color: #2b6cb0;">3. Dose Alvo (mg):</label>
+            <input type="number" id="target_mg" step="0.1" placeholder="Ex: 5" oninput="calculate()">
             
-            <label class="label-alerta">Qual a marcação (UI) que você recebeu?</label>
-            <input type="number" id="received_ui" placeholder="UI que te venderam/entregaram" oninput="calculate()">
+            <label style="color: #c53030;">4. UI que você pretende aspirar:</label>
+            <input type="number" id="received_ui" placeholder="Quantas UI na seringa?" oninput="calculate()">
         </div>
 
         <div class="card" style="text-align:center;">
             <label>Tipo de Seringa:</label>
             <select id="syringe_type" onchange="calculate()">
-                <option value="100">100 UI (1.0 ml)</option>
+                <option value="30">30 UI (0.3 ml)</option>
                 <option value="50">50 UI (0.5 ml)</option>
+                <option value="100" selected>100 UI (1.0 ml)</option>
             </select>
 
-            <label>Marcação Ideal Calculada (UI):</label>
-            <input type="number" id="dosage_ui" readonly style="background: #f9f9f9; color: #2980b9; font-weight: bold;">
+            <label>Marcação Ideal (UI):</label>
+            <div id="ideal_ui_display" style="font-size: 24px; font-weight: bold; color: #2b6cb0; margin: 10px 0;">--</div>
             
-            <canvas id="syringeCanvas" width="140" height="250"></canvas>
-            <p style="font-size: 11px; color: #888;">*A marcação azul mostra onde os MG desejados deveriam estar.</p>
+            <canvas id="syringeCanvas" width="120" height="220"></canvas>
         </div>
     </div>
 
-    <div class="result-box" id="result">
-        Insira os dados da caneta para começar.
+    <div class="result-box" id="result">Preencha os dados para começar.</div>
+
+    <div class="aviso-seguranca">
+        <strong>⚠️ ATENÇÃO:</strong> Esta ferramenta é apenas um auxílio matemático para conferência de fracionamento. Arredondamentos foram aplicados para marcação em seringas físicas.
     </div>
-    
-    <button class="btn-limpar" onclick="limpar()">Limpar Tudo</button>
 </div>
 
 <script>
-    function syncFromMg() {
-        const mlTotal = parseFloat(document.getElementById('pen_ml').value) || 0;
-        const mgTotal = parseFloat(document.getElementById('pen_mg').value) || 0;
-        const targetMg = parseFloat(document.getElementById('target_mg').value) || 0;
-        
-        if (mlTotal > 0 && mgTotal > 0) {
-            const mgPerMl = mgTotal / mlTotal;
-            const uiCalculada = (targetMg / mgPerMl) * 100;
-            document.getElementById('dosage_ui').value = uiCalculada.toFixed(1);
+    let selectedVolume = 0;
+
+    function setVolume(val, btn) {
+        document.querySelectorAll('.vol-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const customContainer = document.getElementById('custom_ml_container');
+        const customInput = document.getElementById('pen_ml');
+
+        if (val === 'outro') {
+            customContainer.style.display = 'block';
+            selectedVolume = 0; 
+        } else {
+            customContainer.style.display = 'none';
+            selectedVolume = val;
+            customInput.value = val;
         }
         calculate();
     }
 
     function calculate() {
-        const mlTotal = parseFloat(document.getElementById('pen_ml').value) || 0;
+        const mlInput = parseFloat(document.getElementById('pen_ml').value);
+        const mlTotal = selectedVolume || mlInput || 0;
         const mgTotal = parseFloat(document.getElementById('pen_mg').value) || 0;
         const targetMg = parseFloat(document.getElementById('target_mg').value) || 0;
         const receivedUi = parseFloat(document.getElementById('received_ui').value) || 0;
         const syringeType = parseFloat(document.getElementById('syringe_type').value);
-        const uiIdeal = parseFloat(document.getElementById('dosage_ui').value) || 0;
-
+        
         const resultDiv = document.getElementById('result');
+        const displayIdeal = document.getElementById('ideal_ui_display');
+        const mgUiInfo = document.getElementById('mg_per_ui_info');
 
         if (mlTotal <= 0 || mgTotal <= 0) {
-            resultDiv.innerText = "Aguardando dados da caneta (Volume e MG)...";
+            mgUiInfo.style.display = 'none';
+            resultDiv.innerHTML = "Aguardando dados da caneta...";
             drawSyringe(0, 0, syringeType);
             return;
         }
 
-        const mgPerMl = mgTotal / mlTotal;
-        const mgRealRecebido = (receivedUi / 100) * mgPerMl;
+        // Cálculo do valor por cada 1 UI
+        // Como 100 UI = 1ml, então cada UI é 0.01ml.
+        const concentrationMgMl = mgTotal / mlTotal;
+        const mgPerUi = concentrationMgMl / 100;
 
-        let textoResultado = "";
+        mgUiInfo.style.display = 'block';
+        mgUiInfo.innerHTML = `💡 Cada <strong>1 UI</strong> na sua seringa contém <strong>${mgPerUi.toFixed(3)} mg</strong> de medicamento.`;
 
-        if (targetMg > 0) {
-            textoResultado += `Para receber <strong>${targetMg}mg</strong>, a marcação correta deve ser <strong>${uiIdeal} UI</strong>.<br>`;
+        if (targetMg <= 0) {
+            displayIdeal.innerText = "--";
+            drawSyringe(0, 0, syringeType);
+            return;
         }
 
+        const uiIdealPrecisa = targetMg / mgPerUi;
+        const uiIdealArredondada = Math.round(uiIdealPrecisa);
+
+        displayIdeal.innerText = uiIdealArredondada + " UI";
+
+        const mgReal = receivedUi * mgPerUi;
+
+        let html = `Para a dose de <strong>${targetMg}mg</strong>: aspire até a marca <strong>${uiIdealArredondada}</strong>.<br>`;
+        
         if (receivedUi > 0) {
-            textoResultado += `<hr>Nesta marcação de <strong>${receivedUi} UI</strong> que você informou, você tem <strong>${mgRealRecebido.toFixed(2)} mg</strong> da substância.`;
-            
-            if (targetMg > 0 && mgRealRecebido < (targetMg * 0.95)) {
-                textoResultado += `<br><span style="color:#ff7675;">⚠️ ALERTA: Você está recebendo MENOS do que o alvo desejado.</span>`;
-            }
-        } else {
-            textoResultado += "Informe a marcação recebida para validar a dose real.";
+            const diff = Math.abs(mgReal - targetMg);
+            const statusClass = diff < 0.1 ? 'dose-perfeita' : 'dose-perigo';
+            html += `<hr style="opacity:0.2">`;
+            html += `Com <strong>${receivedUi} UI</strong>, você recebe <span class="${statusClass}">${mgReal.toFixed(2)} mg</span>.`;
+            html += diff < 0.1 ? `<br>✅ Dose correta.` : `<br>❌ Divergência detectada!`;
         }
 
-        resultDiv.innerHTML = textoResultado;
-        drawSyringe(uiIdeal, receivedUi, syringeType);
+        resultDiv.innerHTML = html;
+        drawSyringe(uiIdealArredondada, receivedUi, syringeType);
     }
 
     function drawSyringe(uiIdeal, uiReal, maxUI) {
         const canvas = document.getElementById('syringeCanvas');
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const startY = 10, height = 200, width = 35, centerX = canvas.width / 2 - width / 2;
-
-        // Corpo
-        ctx.strokeStyle = "#ccc";
-        ctx.strokeRect(centerX, startY, width, height);
-
-        // Desenhar Dose Real (O que a pessoa tem em mãos) - Sombra cinza ou vermelha
+        const startY = 15, height = 180, width = 30, centerX = canvas.width/2 - width/2;
+        ctx.strokeStyle = "#4a5568"; ctx.lineWidth = 2; ctx.strokeRect(centerX, startY, width, height);
         if (uiReal > 0) {
-            let fillReal = (uiReal / maxUI) * height;
-            ctx.fillStyle = "rgba(231, 76, 60, 0.3)";
-            ctx.fillRect(centerX + 2, (startY + height) - Math.min(fillReal, height), width - 4, Math.min(fillReal, height));
+            let hReal = (uiReal / maxUI) * height;
+            ctx.fillStyle = "rgba(231, 76, 60, 0.4)";
+            ctx.fillRect(centerX, (startY + height) - Math.min(hReal, height), width, Math.min(hReal, height));
         }
-
-        // Desenhar Linha da Dose Ideal (Onde deveria estar) - Linha Azul
         if (uiIdeal > 0) {
-            let fillIdeal = (uiIdeal / maxUI) * height;
-            ctx.strokeStyle = "#2980b9";
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            let yPos = (startY + height) - Math.min(fillIdeal, height);
-            ctx.moveTo(centerX - 5, yPos);
-            ctx.lineTo(centerX + width + 5, yPos);
-            ctx.stroke();
+            let hIdeal = (uiIdeal / maxUI) * height;
+            let yPos = (startY + height) - (hIdeal);
+            ctx.strokeStyle = "#2b6cb0"; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(centerX - 10, yPos); ctx.lineTo(centerX + width + 10, yPos); ctx.stroke();
         }
-
-        // Escala Lateral
-        ctx.fillStyle = "#000";
-        ctx.font = "10px Arial";
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "#000";
-        for (let i = 0; i <= maxUI; i += (maxUI/10)) {
-            let yPos = (startY + height) - (i / maxUI) * height;
-            ctx.beginPath(); ctx.moveTo(centerX, yPos); ctx.lineTo(centerX + 8, yPos); ctx.stroke();
-            ctx.fillText(i, centerX - 18, yPos + 4);
+        ctx.fillStyle = "#2d3748"; ctx.font = "bold 10px Arial";
+        for (let i = 0; i <= maxUI; i += (maxUI / 5)) {
+            let y = (startY + height) - (i / maxUI) * height;
+            ctx.beginPath(); ctx.moveTo(centerX, y); ctx.lineTo(centerX + 6, y); ctx.stroke();
+            ctx.fillText(i, centerX - 22, y + 4);
         }
-    }
-
-    function limpar() {
-        document.querySelectorAll('input').forEach(i => i.value = "");
-        document.getElementById('result').innerText = "Insira os dados da caneta para começar.";
-        drawSyringe(0, 0, 100);
     }
 
     window.onload = () => drawSyringe(0, 0, 100);
